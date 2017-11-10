@@ -1,6 +1,7 @@
 var appConfig = require('../config');
 const speechApiKey = appConfig.google_api.speech.key_url;
 const project_id = appConfig.google_api.speech.project_id;
+var speak = require('node-speak')
 // Imports the Google Cloud client library
 const speech = require('@google-cloud/speech');
 
@@ -19,6 +20,7 @@ module.exports = class {
             projectId: project_id,
             keyFilename: speechApiKey
         })
+        this.speak = speak;
     }
     startGoogleSpeechStream(ws) {
         let that = this;
@@ -29,7 +31,11 @@ module.exports = class {
             })
             .on('data', (data) => {
                 var text = data.results[0].alternatives[0].transcript;
-                ws.send(`[Heard]: ${text}`); // send transcript to client                                    
+                that.speak(text, {
+                    callback: src => {
+                        ws.send(`[Heard]: ${src}`); // send transcript to client  \
+                    }
+                })
             });
     }
 }
