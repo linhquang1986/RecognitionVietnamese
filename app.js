@@ -3,15 +3,9 @@ var path = require('path');
 var appConfig = require('./config');
 var app = express();
 var mongoose = require('mongoose');
-let morgan = require('morgan');
 
 
 let port = appConfig.server.port;
-if (appConfig.env !== 'test')
-    app.use(morgan('combined'));
-else
-    port = appConfig.server_test.port;
-
 
 app.use(express.static(path.join(__dirname, 'public')));
 

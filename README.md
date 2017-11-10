@@ -1,13 +1,15 @@
 # Standard-Backend
 
-#Swagger API: https://github.com/swagger-api
-#Swagger Nodejs example : https://github.com/swagger-api/swagger-node
+## google speech:
+# config middleware/speech.js line 10:
 
-#init and config Swagger: ./router/index.js
-#Swagger generator UI: ./public/swagger
+# encoding: 'LINEAR16'
+# sampleRateHertz: 44100
+# languageCode: 'en-US'
 
 
-# google vision api: 
+
+## google vision api: 
     - npm: https://www.npmjs.com/package/@google-cloud/vision
     - vision auth guide: https://googlecloudplatform.github.io/google-cloud-node/#/docs/vision/0.12.0/vision.
     - document: https://cloud.google.com/vision/docs/tutorials

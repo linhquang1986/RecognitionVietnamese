@@ -10,7 +10,7 @@ module.exports = class {
             config: {
                 encoding: 'LINEAR16',
                 sampleRateHertz: 44100,
-                languageCode: 'vi-VN'
+                languageCode: 'en-US'
             },
             interimResults: false, // set to true to receive in-progress guesses
             singleUtterance: false // set to true to close stream after a finished utterance
