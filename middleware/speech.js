@@ -1,5 +1,4 @@
 var appConfig = require('../config');
-var speak = require('responsivevoice');
 const speechApiKey = appConfig.google_api.speech.key_url;
 const project_id = appConfig.google_api.speech.project_id;
 // Imports the Google Cloud client library
