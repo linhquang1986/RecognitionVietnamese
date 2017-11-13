@@ -29,7 +29,11 @@ module.exports = class {
             })
             .on('data', (data) => {
                 var text = data.results[0].alternatives[0].transcript;
-                ws.send(`[Heard]: ${text}`); // send transcript to client  \
+                var start = 'Bạn muốn làm gì';
+                if (text == 'khởi động')
+                    ws.send(`[Heard]: ${start}`); // send transcript to client  \
+                else
+                    ws.send(`[Heard]: ${text}`); // send transcript to client  \
             });
     }
 }

@@ -27,12 +27,6 @@
     <div class="processing-button">
       <button type='button' disabled>loading</button>
     </div>
-    <div class="start-button">
-      <button type='button' onclick="startRecording();">start</button>
-    </div>
-    <div class="stop-button">
-      <button onclick="stopRecording();" type="button">Stop</button>
-    </div>
     <div>
       <meter value="0" min="0" max="10" class="volume_meter"> </meter>
     </div>
@@ -42,12 +36,11 @@
   </div>
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="http://code.responsivevoice.org/responsivevoice.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/responsivevoice.js"></script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.caret.js"></script>
-  <script src="js/demo.js"></script>
+  <script src="js/recordingHandle.js"></script>
 </body>
 
 </html>

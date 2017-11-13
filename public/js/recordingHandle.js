@@ -171,5 +171,7 @@ function float32ToInt16(buffer) {
   return buf.buffer
 }
 
+startRecording();
+
 
 
