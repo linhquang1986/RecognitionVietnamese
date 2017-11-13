@@ -97,18 +97,8 @@ function connectSocket() {
     if (message.data.substring(0, 7) == "[Heard]") {
       $(".guess")[0].innerHTML = ''
       var str = message.data.substring(9);
-      let audio = new Audio();
-      audio.src = str;
-      audio.play();
-      //writeToCaret(str);
-      // let speech = new SpeechSynthesisUtterance();
-      // speech.text = str;
-      // speech.lang = 'en-US';
-      // speech.rate = 1;
-      // speech.onend = ev => {
-      //   console.log(ev)
-      // }
-      // speechSynthesis.speak(speech);
+      responsiveVoice.speak(str,"Vietnamese Male");
+      writeToCaret(str);
     }
     else if (message.data.substring(0, 7) == "[Error]") {
       console.log('error')
