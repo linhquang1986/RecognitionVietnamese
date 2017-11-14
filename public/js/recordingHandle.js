@@ -8,6 +8,7 @@ var ws;
 var breakTime = 45000; // how long to wait before starting a new speech stream on lull in input volume
 var volume = 0; // volume meter initial value 
 var recording = false;
+var isListen = false;
 
 
 /*================================================
@@ -15,11 +16,53 @@ var recording = false;
 Record audio from browser
 
 ==================================================*/
+function start() {
+  try {
+    if (recognition)
+      recognition = null;
+    var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+    recognition.lang = 'vi-VN';
+    recognition.interimResults = false;
+    //recognition.continuous = true;
+    recognition.maxAlternatives = 1;
+    recognition.start();
 
+    recognition.onresult = function (event) {
+      let text = event.results[0][0].transcript;
+      console.log('You said: ', text);
+      if (text == 's3' || text == 'S3') {
+        isListen = true;
+        recognition.abort();
+        startRecording();
+        responsiveVoice.speak("Bạn muốn làm gì", "Vietnamese Male");
+      }
+
+      recognition.abort();
+    };
+    recognition.onstart = function () {
+      console.log('start')
+    }
+
+    recognition.onend = () => {
+      console.log('end')
+      if (!isListen)
+        start();
+    }
+
+    recognition.onerror = function (event) {
+      if (event.error == 'no-speech') {
+        console.log('No speech was detected. Try again.')
+        recognition.abort();
+      };
+    }
+  }
+  catch (e) {
+    console.error('Brower is not support!');
+  }
+}
 function startRecording() {
   showLoading();
   connectSocket();
-
   var AudioContext = window.AudioContext || window.webkitAudioContext;
   context = new AudioContext();
 
@@ -97,11 +140,17 @@ function connectSocket() {
     if (message.data.substring(0, 7) == "[Heard]") {
       $(".guess")[0].innerHTML = ''
       var str = message.data.substring(9);
-      responsiveVoice.speak(str,"Vietnamese Male");
+      responsiveVoice.speak(str, "Vietnamese Male");
+      isListen = false;
       writeToCaret(str);
+      stopRecording();
+      start();
     }
     else if (message.data.substring(0, 7) == "[Error]") {
       console.log('error')
+      isListen = false;
+      stopRecording();
+      start();
     }
   };
 
@@ -171,7 +220,7 @@ function float32ToInt16(buffer) {
   return buf.buffer
 }
 
-startRecording();
+start();
 
 
 

@@ -31,6 +31,7 @@
     "node-quickbooks": "2.0.11",
     "node-uuid": "^1.4.8",
     "nodemailer": "2.6.4",
+    "opn": "^5.1.0",
     "q": "^1.5.1",
     "request": "2.79.0",
     "socket.io": "1.6.0",

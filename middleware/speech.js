@@ -30,11 +30,7 @@ module.exports = class {
             .on('data', (data) => {
                 if (data.results.length > 0) {
                     var text = data.results[0].alternatives[0].transcript;
-                    var start = 'Bạn muốn làm gì';
-                    if (text == 'khởi động')
-                        ws.send(`[Heard]: ${start}`); // send transcript to client  \
-                    else
-                        ws.send(`[Heard]: ${text}`); // send transcript to client  \
+                    ws.send(`[Heard]: ${text}`); // send transcript to client  \
                 }
             });
     }
