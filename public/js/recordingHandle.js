@@ -23,7 +23,6 @@ function start() {
     var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
     recognition.lang = 'vi-VN';
     recognition.interimResults = false;
-    recognition.continuous = true;
     recognition.maxAlternatives = 1;
     recognition.start();
 
