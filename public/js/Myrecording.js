@@ -15,9 +15,19 @@ function start() {
 
         recognition.onresult = function (event) {
             let text = event.results[0][0].transcript;
+            let data = { message: text }
             console.log('You said: ', text);
-            if (text == 'hello' || text == 'Hello') {
-                speak("Bạn muốn làm gì");
+            if (text == 'Xin chào') {
+                $.ajax({
+                    type: 'POST',
+                    url: '/wit/message',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: "json",
+                    data: JSON.stringify(data),
+                    success: res => {
+                        speak(res[0].value)
+                    }
+                })
             } else speak('Bạn vừa nói ' + text);
         };
         recognition.onend = () => {

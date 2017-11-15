@@ -53,6 +53,7 @@
     "gulp-util": "3.0.7",
     "happypack": "3.0.1",
     "lru-cache": "4.0.1",
+    "node-wit": "^4.3.0",
     "pre-git": "3.12.0",
     "serverless": "^1.24.0",
     "tracer": "^0.8.11",
