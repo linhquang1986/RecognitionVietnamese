@@ -30,11 +30,26 @@ function start() {
     recognition.onresult = function (event) {
       let text = event.results[0][0].transcript;
       console.log('You said: ', text);
-      if (text == 's3' || text == 'S3') {
+      if (text == 'hello' || text == 'Hello') {
         isListen = true;
         recognition.abort();
         startRecording();
-        responsiveVoice.speak("Bạn muốn làm gì", "Vietnamese Male");
+        //responsiveVoice.speak("Bạn muốn làm gì", "Vietnamese Male");
+        var msg = new SpeechSynthesisUtterance();
+        var voices = window.speechSynthesis.getVoices();
+        msg.voice = voices[10]; // Note: some voices don't support altering params
+        msg.voiceURI = 'native';
+        //msg.volume = 1; // 0 to 1
+        //msg.rate = 1; // 0.1 to 10
+        //msg.pitch = 2; //0 to 2
+        msg.text = 'Bạn muốn gì';
+        msg.lang = 'vi-VN';
+
+        msg.onend = function (e) {
+          console.log('Finished in ' + event.elapsedTime + ' seconds.');
+        };
+
+        speechSynthesis.speak(msg);
       }
 
       recognition.abort();
@@ -140,7 +155,24 @@ function connectSocket() {
     if (message.data.substring(0, 7) == "[Heard]") {
       $(".guess")[0].innerHTML = ''
       var str = message.data.substring(9);
-      responsiveVoice.speak(str, "Vietnamese Male");
+      //responsiveVoice.speak(str, "Vietnamese Male");
+
+      var msg = new SpeechSynthesisUtterance();
+      var voices = window.speechSynthesis.getVoices();
+      msg.voice = voices[10]; // Note: some voices don't support altering params
+      msg.voiceURI = 'native';
+      //msg.volume = 1; // 0 to 1
+      //msg.rate = 1; // 0.1 to 10
+      //msg.pitch = 2; //0 to 2
+      msg.text = str;
+      msg.lang = 'vi-VN';
+
+      msg.onend = function (e) {
+        console.log('Finished in ' + event.elapsedTime + ' seconds.');
+      };
+
+      speechSynthesis.speak(msg);
+
       isListen = false;
       writeToCaret(str);
       stopRecording();
