@@ -23,7 +23,7 @@ function start() {
     var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
     recognition.lang = 'vi-VN';
     recognition.interimResults = false;
-    //recognition.continuous = true;
+    recognition.continuous = true;
     recognition.maxAlternatives = 1;
     recognition.start();
 
@@ -32,38 +32,18 @@ function start() {
       console.log('You said: ', text);
       if (text == 'hello' || text == 'Hello') {
         isListen = true;
-        recognition.abort();
-        startRecording();
-        //responsiveVoice.speak("Bạn muốn làm gì", "Vietnamese Male");
-        var msg = new SpeechSynthesisUtterance();
-        var voices = window.speechSynthesis.getVoices();
-        msg.voice = voices[10]; // Note: some voices don't support altering params
-        msg.voiceURI = 'native';
-        //msg.volume = 1; // 0 to 1
-        //msg.rate = 1; // 0.1 to 10
-        //msg.pitch = 2; //0 to 2
-        msg.text = 'Bạn muốn gì';
-        msg.lang = 'vi-VN';
-
-        msg.onend = function (e) {
-          console.log('Finished in ' + event.elapsedTime + ' seconds.');
-        };
-
-        speechSynthesis.speak(msg);
+        responsiveVoice.speak("Bạn muốn làm gì", "Vietnamese Male", {
+          onend: () => {
+            startRecording();
+          }
+        });
       }
-
       recognition.abort();
     };
-    recognition.onstart = function () {
-      console.log('start')
-    }
-
     recognition.onend = () => {
-      console.log('end')
       if (!isListen)
         start();
     }
-
     recognition.onerror = function (event) {
       if (event.error == 'no-speech') {
         console.log('No speech was detected. Try again.')
@@ -155,31 +135,17 @@ function connectSocket() {
     if (message.data.substring(0, 7) == "[Heard]") {
       $(".guess")[0].innerHTML = ''
       var str = message.data.substring(9);
-      //responsiveVoice.speak(str, "Vietnamese Male");
-
-      var msg = new SpeechSynthesisUtterance();
-      var voices = window.speechSynthesis.getVoices();
-      msg.voice = voices[10]; // Note: some voices don't support altering params
-      msg.voiceURI = 'native';
-      //msg.volume = 1; // 0 to 1
-      //msg.rate = 1; // 0.1 to 10
-      //msg.pitch = 2; //0 to 2
-      msg.text = str;
-      msg.lang = 'vi-VN';
-
-      msg.onend = function (e) {
-        console.log('Finished in ' + event.elapsedTime + ' seconds.');
-      };
-
-      speechSynthesis.speak(msg);
-
-      isListen = false;
-      writeToCaret(str);
-      stopRecording();
-      start();
+      responsiveVoice.speak(str, "Vietnamese Male", {
+        onend: () => {
+          isListen = false;
+          writeToCaret(str);
+          stopRecording();
+          start();
+        }
+      });
     }
     else if (message.data.substring(0, 7) == "[Error]") {
-      console.log('error')
+      console.error('error')
       isListen = false;
       stopRecording();
       start();
