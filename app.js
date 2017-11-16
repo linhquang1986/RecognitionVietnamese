@@ -1,3 +1,4 @@
+"use strict"
 var express = require('express');
 var path = require('path');
 var appConfig = require('./config');
@@ -17,7 +18,7 @@ app.set('port', port)
 
 let listener = app.listen(port, () => {
     console.log('Server running on localhost:' + listener.address().port);
-    opn('http://localhost:5000');
+    //opn('http://localhost:5000');
 });
 // connetion Speech Client socket
 var middleWebS = require('./middleware').webS;

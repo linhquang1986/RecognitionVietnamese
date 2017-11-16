@@ -1,8 +1,9 @@
+"use strict"
 var { Wit } = require('node-wit');
 module.exports = class {
-    constructor() {
+    constructor(witAiAccessToken) {
         this.client = new Wit({
-            accessToken: 'LL3HW5N2Z5N2C46OAV7SC4PONCFDXUNF'
+            accessToken: witAiAccessToken
         })
     }
     sent(message, callback) {

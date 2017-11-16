@@ -172,5 +172,8 @@
       "key_url": "./config/RecognitionVietNamese.json",
       "project_id":"recognitionvietnamese"
     }
+  },
+  "wit_ai":{
+    "myAccessToken":"NRJR5XBER75K4O7TFIZCSZVDNSLEQ4OF"
   }
 }

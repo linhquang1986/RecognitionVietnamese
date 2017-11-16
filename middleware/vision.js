@@ -1,3 +1,4 @@
+"use strict"
 var appConfig = require('../config');
 var Vision = require('@google-cloud/vision');
 const visonApiKey = appConfig.google_api.vision.key_url;

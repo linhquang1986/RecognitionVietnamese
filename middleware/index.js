@@ -1,3 +1,4 @@
+"use strict"
 var vision = require('./vision');
 var webS = require('./webSocketService');
 var speech = require('./speech');

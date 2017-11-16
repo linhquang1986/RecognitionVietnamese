@@ -1,3 +1,4 @@
+"use strict"
 let uploadController = require('./uploadImg');
 let witController = require('./witAi');
 let Controllers = {

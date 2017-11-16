@@ -1,4 +1,5 @@
 
+"use strict"
 var Vision = require('../middleware').vision;
 
 exports.upload_img = (req, res) => {
