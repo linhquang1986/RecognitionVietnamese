@@ -7,6 +7,6 @@ let wit = new Wit(witAiAccessToken);
 exports.message = (req, res) => {
     let message = req.body.message;
     wit.sent(message, (rs) => {
-        res.send(rs.entities.intent)
+        res.send(rs)
     });
 }

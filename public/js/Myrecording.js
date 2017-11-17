@@ -13,8 +13,8 @@ function sendWitAi(msg) {
         dataType: "json",
         data: JSON.stringify(data),
         success: res => {
-            //console.log(res)
-            speak(res[0].value)
+            console.log(res)
+            //speak(res[0].value)
         }
     })
 }
