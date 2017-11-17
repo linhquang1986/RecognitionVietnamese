@@ -21,30 +21,31 @@
 </head>
 
 <body>
-  <!-- only html5 -->
-  <div class="container mybuttons">
-    <img src="images/icon.png">
-  </div>
 
-  <!-- use speech api -->
-  <!-- <div class="container mybuttons">
-    <audio src="" class="speech" hidden></audio>
-    <div class="processing-button">
-      <button type='button' disabled>loading</button>
+  <div class="container menucontai text-center">
+    <img id="mic-icon" src="images/icon.png">
+    <div class="row">
+      <div class="listmenu col-md-12">
+      </div>
+      <div class="col-md-12">
+        <ul class="list-group drinks">
+        </ul>
+      </div>
     </div>
-    <div>
-      <meter value="0" min="0" max="10" class="volume_meter"> </meter>
-    </div>
-    <div>
-      <textarea rows="4" readonly="readonly" class="guess">             </textarea>
-    </div>  
-  </div>  -->
+  </div>
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <!-- http service -->
+  <script src="js/myAction/http.js"></script>
+  <!-- Dom service -->
+  <script src="js/myAction/renderView.js"></script>
+  <!-- list my action -->
+  <script src="js/myAction/listAction.js"></script>
+  <!-- handle my action -->
+  <script src="js/myAction/myAction.js"></script>
   <script src="js/responsivevoice.js"></script>
-  <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <!-- <script src="js/jquery.caret.js"></script> -->
   <script src="js/Myrecording.js"></script>
 </body>
 

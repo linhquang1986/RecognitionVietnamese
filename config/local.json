@@ -22,7 +22,7 @@
     "port_two": "",
     "host_three": "",
     "port_three": "",
-    "dbs": ["mydatabase","traffic"],
+    "dbs": ["mydatabase","drinkmenu"],
     "path": "/server/data",
     "useReplica": false,
     "options": {

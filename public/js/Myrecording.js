@@ -1,10 +1,16 @@
 "use strict"
 var recognition = null;
+var inAction = null;
 function speak(msg) {
     responsiveVoice.speak(msg, "Vietnamese Male");
 }
 function sendWitAi(msg) {
     let data = { message: msg }
+    if (inAction == listAction.chooseMenu)
+        menuDrink.forEach(item => {
+            if (msg.toLowerCase() == item.name.toLowerCase())
+                getDrink(item._id)
+        })
     $.ajax({
         type: 'POST',
         //url wit API
@@ -14,7 +20,11 @@ function sendWitAi(msg) {
         data: JSON.stringify(data),
         success: res => {
             console.log(res)
-            //speak(res[0].value)
+            if (res.entities.intent) {
+                let action = res.entities.intent[0].value
+                inAction = action;
+                window[action]();
+            }
         }
     })
 }
@@ -33,10 +43,7 @@ function start() {
             //your process handle
             let text = event.results[0][0].transcript;
             console.log('You said: ', text);
-           // if (text == 'Xin chào') {
-                //send text to Wit ai
-                sendWitAi(text);
-            //} else speak('Bạn vừa nói ' + text);
+            sendWitAi(text);
         };
         // if you do not speaking for a while, it will turn itself off
         // to recording forever, need should restart recording
@@ -49,4 +56,5 @@ function start() {
     }
 }
 //start recording
+//getMenu()
 start();

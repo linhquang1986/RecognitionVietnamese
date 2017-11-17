@@ -1,8 +1,8 @@
 "use strict"
-let uploadController = require('./uploadImg');
 let witController = require('./witAi');
+let drinkController = require('./drinkOrder');
 let Controllers = {
-  uploadController: uploadController,
+  drinkController: drinkController,
   witController: witController
 }
 module.exports = Controllers;

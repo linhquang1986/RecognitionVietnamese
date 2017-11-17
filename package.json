@@ -27,6 +27,7 @@
     "google-vision-api-client": "0.0.3",
     "jsonwebtoken": "^8.1.0",
     "lodash": "4.17.2",
+    "mongoose": "^4.13.3",
     "multer": "^1.3.0",
     "node-quickbooks": "2.0.11",
     "node-uuid": "^1.4.8",
