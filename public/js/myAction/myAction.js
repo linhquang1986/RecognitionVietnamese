@@ -10,8 +10,11 @@ function _startorder() {
 }
 
 function _free() {
+    stopRecording();
+    start();
     $('#mic-icon').show();
     $('.listmenu').hide();
+    $('.drinks').hide();
 }
 
 function getDrink(menuId) {

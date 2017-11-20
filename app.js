@@ -9,7 +9,7 @@ var opn = require('opn');
 
 let port = appConfig.server.port;
 
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
 
 // router
 app.use('/', require('./router'));

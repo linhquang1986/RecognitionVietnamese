@@ -29,9 +29,9 @@ function start() {
     recognition.onresult = function (event) {
       let text = event.results[0][0].transcript;
       console.log('You said: ', text);
-      if (text == 'hello' || text == 'Hello') {
+      if (text == 'Doraemon' || text == 'doraemon') {
         isListen = true;
-        responsiveVoice.speak("Bạn muốn làm gì", "Vietnamese Male", {
+        responsiveVoice.speak("Bạn muốn tôi giúp gì", "Vietnamese Male", {
           onend: () => {
             startRecording();
           }
@@ -54,24 +54,25 @@ function start() {
     console.error('Brower is not support!');
   }
 }
+
 function startRecording() {
   showLoading();
   connectSocket();
   var AudioContext = window.AudioContext || window.webkitAudioContext;
   context = new AudioContext();
 
-  var recorder = context.createScriptProcessor(2048, 1, 1);
+  var recorder = context.createScriptProcessor(4096, 1, 1);
   recorder.connect(context.destination);
 
   var handleSuccess = function (stream) {
-    setRecordingTrue(1000); // give socket 1 sec to open
+    setRecordingTrue(0); // give socket 1 sec to open
     audioInput = context.createMediaStreamSource(stream);
     audioInput.connect(recorder);
     recorder.onaudioprocess = function (stream) {
       if (!recording) return;
       var buf = stream.inputBuffer.getChannelData(0);
       volume = detectVolume(buf, this);
-      $(".volume_meter")[0].value = volume * 100;
+      //$(".volume_meter")[0].value = volume * 100;
       if (volume < 0.01 && (Date.now() > (streamStartTime + breakTime))) {
         ws.send("restarting Google Stream");
         console.log("restarting Google Stream");
@@ -97,7 +98,7 @@ function startRecording() {
 }
 
 function stopRecording() {
-  $(".volume_meter")[0].value = 0;
+  //$(".volume_meter")[0].value = 0;
   recording = false;
   try {
     audioInput.mediaStream.getTracks()[0].stop()
@@ -107,8 +108,8 @@ function stopRecording() {
   }
   context.close();
   ws.close();
-  $(".start-button").css("display", "inline");
-  $(".stop-button").css("display", "none");
+  //$(".start-button").css("display", "inline");
+  //$(".stop-button").css("display", "none");
 }
 
 
@@ -118,7 +119,7 @@ Websocket connection to Node server
 
 ==================================================*/
 
-const host = location.origin.replace(/^http/, 'ws');
+const host = 'ws://localhost:5000';//location.origin.replace(/^http/, 'ws');
 
 function connectSocket() {
   ws = new WebSocket(host);
@@ -132,16 +133,11 @@ function connectSocket() {
   // handle inbound transcripts from Node server
   ws.onmessage = function (message) {
     if (message.data.substring(0, 7) == "[Heard]") {
-      $(".guess")[0].innerHTML = ''
+      //$(".guess")[0].innerHTML = ''
       var str = message.data.substring(9);
-      responsiveVoice.speak(str, "Vietnamese Male", {
-        onend: () => {
-          isListen = false;
-          writeToCaret(str);
-          stopRecording();
-          start();
-        }
-      });
+      sendWitAi(str)
+      isListen = false;
+      writeToCaret(str);
     }
     else if (message.data.substring(0, 7) == "[Error]") {
       console.error('error')
@@ -170,23 +166,23 @@ Helpers
 // caret position helper from https://github.com/accursoft/caret
 function writeToCaret(string) {
   console.log("======Writing======: " + string)
-  var caret_pos = $('.guess').caret();
-  var pre_caret = $('.guess').val().substring(0, caret_pos);
-  $('.guess').val(pre_caret + string);
-  $('.guess').caret(caret_pos + string.length);
+  //var caret_pos = $('.guess').caret();
+  //var pre_caret = $('.guess').val().substring(0, caret_pos);
+  //$('.guess').val(pre_caret + string);
+  //$('.guess').caret(caret_pos + string.length);
 }
 
 function showLoading() {
-  $(".start-button").css("display", "none");
-  $(".processing-button").css("display", "inline");
+  //$(".start-button").css("display", "none");
+  //$(".processing-button").css("display", "inline");
 }
 
 function setRecordingTrue(delay) {
   setTimeout(function () { // web socket needs time to connect before accepting audio
     recording = true;
     streamStartTime = Date.now()
-    $(".processing-button").css("display", "none");
-    $(".stop-button").css("display", "inline");
+    //$(".processing-button").css("display", "none");
+    //$(".stop-button").css("display", "inline");
   }, delay);
 }
 
@@ -216,7 +212,6 @@ function float32ToInt16(buffer) {
   }
   return buf.buffer
 }
-
 start();
 
 

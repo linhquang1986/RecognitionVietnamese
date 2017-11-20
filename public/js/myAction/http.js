@@ -1,10 +1,9 @@
 "use strict"
-
+var serverUrl = 'http://localhost:5000';
 var get = (url, callback) => {
     $.ajax({
         type: 'GET',
-        //url wit API
-        url: url,
+        url: serverUrl + url,
         contentType: 'application/json; charset=utf-8',
         dataType: "json",
         success: data => {
@@ -16,8 +15,7 @@ var get = (url, callback) => {
 var post = (url, data, callback) => {
     $.ajax({
         type: 'POST',
-        //url wit API
-        url: url,
+        url: serverUrl + url,
         contentType: 'application/json; charset=utf-8',
         dataType: "json",
         data: JSON.stringify(data),

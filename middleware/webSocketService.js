@@ -12,30 +12,30 @@ module.exports = class {
         let that = this;
         that.wss.on('connection', function (ws) {
             console.log('Client connected: ' + ws._ultron.id);
-            var gstreams = []; // keeep track of speech streams
-            var activeStreamID = -1; // pointer to active speech stream
+            var gstreams; // keeep track of speech streams
+            //var activeStreamID = -1; // pointer to active speech stream
             ws.on('message', function (data) {
                 if (typeof data == 'string') {
                     if (data.indexOf("info") > 0) { // client sends an info string on connection that triggers server to start a speech stream             
                         console.log('Start first stream');
-                        gstreams.push(that.speech.startGoogleSpeechStream(ws));
-                        activeStreamID = activeStreamID + 1;
+                        gstreams = that.speech.startGoogleSpeechStream(ws);
+                        //activeStreamID = activeStreamID + 1;
                     }
                     else { // client requested a new speech stream (client-side logic allows for triggering on a lull in input volume)
                         console.log('Start another stream');
-                        gstreams[activeStreamID].end();
-                        gstreams.push(that.speech.startGoogleSpeechStream(ws));
-                        activeStreamID = activeStreamID + 1;
+                        gstreams.end();
+                        gstreams = that.speech.startGoogleSpeechStream(ws);
+                        //activeStreamID = activeStreamID + 1;
                     }
                 }
                 else {
-                    gstreams[activeStreamID].write(data); // client sent audio, push it to active speech stream 
+                    gstreams.write(data); // client sent audio, push it to active speech stream 
                 }
             });
             ws.on('close', function () {
                 console.log('Client disconnected');
                 ws.isAlive = false;
-                gstreams[activeStreamID].end();
+                gstreams.end();
             });
             ws.on('error', function (err) {
                 console.log(`Web socket error ${err.message}`);
